@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:yes_no_app/presentation/widgets/chat/her_message_bubble.dart';
 import 'package:yes_no_app/presentation/widgets/chat/my_message_bubble.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -15,7 +16,7 @@ class ChatScreen extends StatelessWidget {
                 'https://static.myfigurecollection.net/upload/items/1/1931894-e7597.jpg'),
           ),
         ),
-        title: Text('Odalys'),
+        title: Text('Toji Fushiguro'),
         centerTitle: false,
       ),
       body: _ChatView(),
@@ -35,7 +36,9 @@ class _ChatView extends StatelessWidget {
                 child: ListView.builder(
                     itemCount: 100,
                     itemBuilder: (context, index) {
-                      return const MyMessageBubble();
+                      return (index % 2 == 0)
+                          ? const HerMessageBubble()
+                          : const MyMessageBubble();
                     })),
             Text('Mundo')
           ],
