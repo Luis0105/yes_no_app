@@ -15,6 +15,7 @@ class MyMessageBubble extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
         Container(
+          //padding: EdgeInsets.all(5),
           decoration: BoxDecoration(
               color: colors.primary, borderRadius: BorderRadius.circular(20)),
           child: Padding(
@@ -25,7 +26,7 @@ class MyMessageBubble extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 10)
+        const SizedBox(height: 5)
       ],
     );
   }
