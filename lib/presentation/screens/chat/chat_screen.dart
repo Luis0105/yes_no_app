@@ -51,7 +51,7 @@ class _ChatView extends StatelessWidget {
                       // Más facil si es par es de ella, si no, es mío
                       // return (index % 2 == 0)
                       return (message.fromWho == FromWho.hers)
-                          ? const HerMessageBubble()
+                          ? HerMessageBubble(message: message)
                           : MyMessageBubble(message: message);
                     })),
 
