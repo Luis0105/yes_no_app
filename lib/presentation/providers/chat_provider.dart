@@ -3,53 +3,50 @@ import 'package:yes_no_app/config/helpers/get_yes_no_answer.dart';
 import 'package:yes_no_app/domain/entities/message.dart';
 
 class ChatProvider extends ChangeNotifier {
-  // Controlador que maneja la posición del scroll
+  //Controlador quemaneja la posición del scroll
   final ScrollController chatScrollController = ScrollController();
   final getYesNoAnswer = GetYesNoAnswer();
-
   List<Message> messageList = [];
 
   Future<void> sendMessage(String text) async {
     if (text.trim().isEmpty) return;
-    final newMessage = Message(text: text.trim(), fromWho: FromWho.me);
-    // Agregar un nuevo mensaje a la lista
+    final newMessage = Message(
+      text: text.trim(),
+      fromWho: FromWho.me,
+      timestamp: DateTime.now(),
+    );
     messageList.add(newMessage);
-    print('flutter: Cantidad de mensajes: ${messageList.length}');
 
-    // Detectar si el usario hizo una pregunta
     if (text.endsWith('?')) {
-      herReply();
+      herReplay();
     }
-
-    // Notificara a provider que algo cambió
-    notifyListeners();
+    print(
+        'Cantidad de mensajes: ${messageList.length}'); // Si no hay mensaje no hace nada
+    notifyListeners(); // Notificar al provider que hay un cambio
     moveScrollToBottom();
   }
 
-  // Mover el scroll hasta abajo
+  //mover el scroll al final de la lista
   Future<void> moveScrollToBottom() async {
-    // Animación
+    //animación
     await Future.delayed(const Duration(milliseconds: 100));
     chatScrollController.animateTo(
-        // offset: Posición del máximo scroll posible
+        //posicion del maximo scroll posible
         chatScrollController.position.maxScrollExtent,
         duration: const Duration(milliseconds: 300),
-        // Rebote al final de la animación
+        //Rebote al final de la animación
         curve: Curves.easeOut);
   }
 
-  // Crear la respuesta de ella
-  Future<void> herReply() async {
-    // Obtener el mensaje de la petición HTTP
+  // Crear la respuesta de la otra persona
+  Future<void> herReplay() async {
+    // Obtener el mensaje de la petición
     final herMessage = await getYesNoAnswer.getAnswer();
-
-    // Añadimos el mensaje de ella a la lista de mensajes
+    // Añadir el mensaje a la lista de mensajes
     messageList.add(herMessage);
-
-    // Notificar a provider los cambios
+    // Notificar al provider que hay un cambio
     notifyListeners();
-
-    // Mover el scroll hasta el último mensaje
+    // Mover el scroll al final de la lista
     moveScrollToBottom();
   }
 }
